@@ -1,9 +1,9 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
-const Schema = mongoose.schema;
-const createHash = require('createHash');
+const Schema = mongoose.Schema;
+const createHash = require('./createHash');
 const hashLen = 8; // 8 Chars long
-const baseUrl = process.env.BASE_URL || 'http://localhost';
+const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
 
 const redirSchema = new Schema({
   shortUrl: String,
@@ -34,7 +34,7 @@ module.exports = [
     handler(request, reply) {
       const uniqueID = createHash(hashLen);
       const newRedir = new Redir({
-        shortUrl: `${baseUrl}/${uniqueID}`;
+        shortUrl: `${baseUrl}/${uniqueID}`,
         url: request.payload.url,
         createdAt: new Date()
       });
